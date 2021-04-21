@@ -1,0 +1,6 @@
+venv/
+replays/
+.vscode/
+_vsc.bat
+*.pyc
+*__pycache__*
