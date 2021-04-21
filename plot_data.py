@@ -1,5 +1,4 @@
 import json
-from pprint import pprint
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FuncFormatter
 
