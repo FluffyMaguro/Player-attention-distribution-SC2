@@ -3,14 +3,13 @@ import json
 import traceback
 import pathlib
 from collections import namedtuple
-from statistics import median
 from multiprocessing import Pool
 
 import zephyrus_sc2_parser
 from zephyrus_sc2_parser.game import GameObj
 
 # Max game length up to where player selections count (real-time minutes)
-MAX_LENGTH = None
+MAX_LENGTH = 15
 
 command_buildings = [
     'Nexus',
@@ -170,13 +169,11 @@ def sum_ticks(file_path: str) -> dict:
 
 if __name__ == '__main__':
     # Save replay paths
-    replay_folder = 'replays'
     replays = set()
-    for root, directories, files in os.walk(replay_folder):
+    for root, directories, files in os.walk('replays'):
         for file in files:
             if file.endswith('.SC2Replay'):
-                file_path = os.path.join(root, file)
-                replays.add(file_path)
+                replays.add(os.path.join(root, file))
 
     # Parse replays
     with Pool() as p:
@@ -186,7 +183,6 @@ if __name__ == '__main__':
     out = dict()
     for game in results:
 
-        # Ignore empty games
         if game is None:
             continue
 
