@@ -27,7 +27,7 @@ TICK_SIZE = 160
 PlayerTuple = namedtuple('PlayerTuple', ['name', 'race'])
 
 
-def handle_replay(path, max_length, player_names=None, identifiers=None):
+def handle_replay(path, player_names=None, identifiers=None):
     parsed_ticks = {}
 
     replay = zephyrus_sc2_parser.parse_replay(path, local=True, creep=False)
@@ -84,7 +84,7 @@ def handle_replay(path, max_length, player_names=None, identifiers=None):
                 all_times.append(diff)
 
                 # Skip events that are over max length
-                if max_length is not None and s['start'] > max_length * 22.4 * 60:
+                if MAX_LENGTH is not None and s['start'] > MAX_LENGTH * 22.4 * 60:
                     continue
 
                 # check the selection for each group
@@ -147,7 +147,7 @@ def sum_ticks(file_path: str) -> dict:
     """ Sums up selection in ticks, and returns the total sum for given replay (per player, per type)
     It's in percent, so for actual time, it would need to be *tick_lenght/100."""
     try:
-        parsed_ticks = handle_replay(file_path, MAX_LENGTH)
+        parsed_ticks = handle_replay(file_path)
     except zephyrus_sc2_parser.exceptions.ReplayDecodeError:
         print(f"Error: replay could not be decoded {file_path}")
         return
@@ -181,10 +181,13 @@ if __name__ == '__main__':
 
     # Go over results, sum up data for given league
     out = dict()
+    parsed_replays = 0
     for game in results:
 
         if game is None:
             continue
+
+        parsed_replays += 1
 
         # Iterate over players in each game
         for player in game:
@@ -208,3 +211,5 @@ if __name__ == '__main__':
 
     with open(f'results{MAX_LENGTH if MAX_LENGTH is not None else ""}.json', 'w') as f:
         json.dump(out, f, indent=2)
+
+    print(f"{parsed_replays} replays analyzed and data saved!")
