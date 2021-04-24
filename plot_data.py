@@ -10,7 +10,19 @@ leagues = ['bronze', 'silver', 'gold', 'platinum', 'diamond', 'master', 'grandma
 labels = ['army', 'economy', 'infrastructure']
 zlabels = labels + ['creep', 'queen']
 
-fig, axis = plt.subplots(1, 3, dpi=100, figsize=(20, 8))
+# Styling
+bg_color = '#333'
+text_color = '#fff'
+plt.rcParams['figure.facecolor'] = bg_color
+plt.rcParams['xtick.color'] = text_color
+plt.rcParams['ytick.color'] = text_color
+plt.rcParams['axes.edgecolor'] = text_color
+plt.rcParams['axes.facecolor'] = '#ccc'
+plt.rcParams['legend.facecolor'] = '#ddd'
+plt.rcParams['legend.edgecolor'] = '#555'
+
+# Plotting
+fig, axis = plt.subplots(1, 3, dpi=100, figsize=(21, 8))
 
 for i, race in enumerate(races):
     army = []
@@ -51,12 +63,12 @@ for i, race in enumerate(races):
     axis[i].legend(handles[::-1], labels[::-1], loc='upper center')
 
     # Labels and titles
-    axis[i].set_xlabel('Player skill')
-    axis[i].set_ylabel('Attention usage')
-    axis[i].set_title(race.capitalize(), fontsize=14)
+    axis[i].set_xlabel('Player skill', color=text_color)
+    axis[i].set_ylabel('Attention usage', color=text_color)
+    axis[i].set_title(race.capitalize(), fontsize=14, color=text_color)
     axis[i].yaxis.set_major_formatter(FuncFormatter('{0:.0%}'.format))
 
-fig.suptitle("How players distribute their attention in-game\n(StarCraft II) (first 15 real-time minutes)", fontsize=16)
+fig.suptitle("How players distribute their attention in-game\n(StarCraft II) (first 15 real-time minutes)", fontsize=16, color=text_color)
 plt.tight_layout(h_pad=2)
-plt.subplots_adjust(top=0.88)
-plt.savefig('result15.png')
+plt.subplots_adjust(top=0.88, right=0.97)
+plt.savefig('result15B.png')
