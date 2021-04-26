@@ -11,7 +11,7 @@ labels = ['army', 'economy', 'infrastructure']
 zlabels = labels + ['creep', 'queen']
 
 # Styling
-bg_color = '#333'
+bg_color = '#060606'
 text_color = '#fff'
 plt.rcParams['figure.facecolor'] = bg_color
 plt.rcParams['xtick.color'] = text_color
