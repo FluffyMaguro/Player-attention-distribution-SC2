@@ -21,8 +21,9 @@ for i, league in enumerate(averages):
     plt.text(i + 1, averages[league], avg, horizontalalignment='center')
 
 plt.title('Distribution of game lengths')
-plt.xticks(list(range(1, 9)), list(data.keys()), rotation=30)
-plt.yticks(list(range(0, 3600, 600)), [time.strftime('%M:%S', time.gmtime(i)) for i in list(range(0, 3600, 600))])
+plt.ylim(0,3600)
+plt.xticks(list(range(1, 9)), [i.capitalize() for i in list(data.keys())], rotation=30)
+plt.yticks(list(range(0, 3600, 600)), [time.strftime('%H:%M:%S', time.gmtime(i)) for i in list(range(0, 3600, 600))])
 plt.ylabel('Game length')
 
 # plt.show()
